@@ -37,12 +37,12 @@ function vary($builder) {
 }
 
 $builder = new RandRecBuilder();
-$builder->addBuilder('bSin', 100);
-$builder->addBuilder('bCos', 100);
-$builder->addBuilder('bAvg', 100);
-$builder->addBuilder('bProd', 100);
-$builder->addBuilder('varx', 60);
-$builder->addBuilder('vary', 60);
+$builder->addBuilder('bSin', new DifVal(200, -100/8));
+$builder->addBuilder('bCos', new DifVal(200, -100/8));
+$builder->addBuilder('bAvg', new DifVal(200, -100/8));
+$builder->addBuilder('bProd', new DifVal(200, -100/8));
+$builder->addBuilder('varx', new DifVal(0, 100/8));
+$builder->addBuilder('vary', new DifVal(0, 100/8));
 
 $cExpr = $builder->build(3);
 
