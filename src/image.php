@@ -54,8 +54,8 @@ $img = imagecreatetruecolor(WIDTH, HEIGHT);
 
 for($x = 0; $x < WIDTH; ++$x) {
 	for($y = 0; $y < HEIGHT; ++$y) {
-		$varBinds = array(	'x' => $x/WIDTH,
-							'y' => $y/HEIGHT);
+		$varBinds = array(	'x' => $x/(WIDTH/2) - 1,
+							'y' => $y/(HEIGHT/2) - 1);
 		$red = ($cExpr[0]->evaluate($varBinds) + 1) * 128;
 		$green = ($cExpr[1]->evaluate($varBinds) + 1) * 128;
 		$blue = ($cExpr[2]->evaluate($varBinds) + 1) * 128;
