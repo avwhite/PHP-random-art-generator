@@ -32,7 +32,11 @@ class RandRecBuilder {
 
 	public function addBuilder($builder, DifVal $weight) {
 		$this->builders[] = $builder;
-		$this->weight[] = $weight;
+		if(count($this->weight) == 0) {
+			$this->weight[] = $weight;
+		} else {
+			$this->weight[] = end($this->weight)->plus($weight);
+		}
 		$this->totalWeight = $this->totalWeight->plus($weight);
 	}
 
@@ -55,22 +59,30 @@ class RandRecBuilder {
 
 	private function auxBuild() {
 		$rand = rand(0,$this->totalWeight->get($this->turns)-1);
-		$atIndex = -1; //So we get an error message if we fuck up.
-		
-		if($rand < $this->weight[0]->get($this->turns)) {
-			$atIndex = 0;
-		}
-		else {
-			$accum = $this->weight[0]->get($this->turns);
-			for($i = 1; $i < count($this->weight); ++$i) {
-				if($rand < $accum + $this->weight[$i]->get($this->turns) && $rand >= $accum) {
-					$atIndex = $i;
-				}
-				$accum += $this->weight[$i]->get($this->turns);
-			}
-		}
-		
+		$atIndex = $this->binarySearch($rand, 0, count($this->weight) - 1); 
 		$builder = $this->builders[$atIndex];
 		return $builder($this);
+	}
+
+	//modified: search for smallest value larger than key
+	//not as efficient as normal binary search, always runs in
+	//worst case time. T(logN + 1)
+	private function binarySearch($key, $low, $high) {
+		if($high == $low) {
+			return $low;
+		}
+		if($high < $low) {
+			return -1;
+		}
+
+		$mid = floor(($low + $high)/2);
+		$val = $this->weight[$mid]->get($this->turns) ;
+	
+		if($key < $val) {
+			return $this->binarySearch($key, $low, $mid);
+		} elseif($key >= $val) {
+			return $this->binarySearch($key, $mid+1, $high);
+		}
+		
 	}
 }
