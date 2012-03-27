@@ -46,9 +46,16 @@ $builder->addBuilder('vary', new DifVal(0, 100/8));
 
 $cExpr = $builder->build(3);
 
+$out = "out.png";
+if(count($argv) > 1) {
+	$out = $argv[1];
+}
+
 echo $cExpr[0] . "\n";
 echo $cExpr[1] . "\n";
 echo $cExpr[2] . "\n";
+
+print_r($argv);
 
 $img = imagecreatetruecolor(WIDTH, HEIGHT);
 
@@ -63,5 +70,5 @@ for($x = 0; $x < WIDTH; ++$x) {
 	}
 }
 
-imagepng($img, 'rand.png');
+imagepng($img, $out);
 	
