@@ -55,8 +55,6 @@ echo $cExpr[0] . "\n";
 echo $cExpr[1] . "\n";
 echo $cExpr[2] . "\n";
 
-print_r($argv);
-
 $img = imagecreatetruecolor(WIDTH, HEIGHT);
 
 for($x = 0; $x < WIDTH; ++$x) {
@@ -71,4 +69,3 @@ for($x = 0; $x < WIDTH; ++$x) {
 }
 
 imagepng($img, $out);
-	
